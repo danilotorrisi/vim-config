@@ -26,6 +26,8 @@ if (has("termguicolors"))
 endif
 
 set rtp+=/usr/bin/fzf
+set number
+set relativenumber 
 
 syntax on
 colorscheme onedark
