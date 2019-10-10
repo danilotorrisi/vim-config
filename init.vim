@@ -13,13 +13,22 @@ Plug 'sheerun/vim-polyglot' " Polyglot for every syntax highlight
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'junegunn/fzf'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
+
 
 call plug#end()
 
+let mapleader = "\\"
+
+" noremap <Up> <Nop>
+" noremap <Down> <Nop>
+" noremap <Left> <Nop>
+" noremap <Right> <Nop>
+
 " Maps the NERDTree file list. Auto open if no file selected.
-map <S-o> :FZF<CR>
-map <S-r> :source $MYVIMRC<CR>
-map <S-i> :PlugInstall<CR>
+map <leader>o :FZF<CR>
+map <leader>r :source $MYVIMRC<CR>
+map <leader>i :PlugInstall<CR>
 
 inoremap jk <ESC>
 
@@ -35,6 +44,11 @@ set updatetime=300
 set shortmess+=c
 set signcolumn=yes
 
+" Format code.
+autocmd FileType python nnoremap <buffer> <leader>f :YAPF<CR>
+autocmd FileType css,javascript,typescript nnoremap <buffer> <leader>f :Prettier<CR>
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
+autocmd BufWritePre *.py YAPF
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -53,8 +67,8 @@ endfunction
 inoremap <silent><expr> <c-space> coc#refresh()
 
 " Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-nnoremap <silent> <S-F> :CocAction<CR>
+nnoremap <silent> <leader>d :call <SID>show_documentation()<CR>
+nnoremap <silent> <leader>a :CocAction<CR>
 
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> <S-n> <Plug>(coc-diagnostic-prev)
@@ -73,7 +87,8 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+
 " Or use `complete_info` if your vim support it, like:
 " inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
@@ -82,8 +97,8 @@ colorscheme onedark
 
 let g:deoplete#enable_at_startup=1
 let g:airline_theme='onedark'
+let g:airline#extensions#coc#enabled = 1
 let g:prettier#exec_cmd_async = 1
 let g:prettier#autoformat = 0
 let g:polyglot_disabled = ['typescript']
-autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
 
