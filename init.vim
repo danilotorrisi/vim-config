@@ -47,8 +47,9 @@ set signcolumn=yes
 " Format code.
 autocmd FileType python nnoremap <buffer> <leader>f :YAPF<CR>
 autocmd FileType css,javascript,typescript nnoremap <buffer> <leader>f :Prettier<CR>
-autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml PrettierAsync
 autocmd BufWritePre *.py YAPF
+autocmd FileType javascript,typescript,css setlocal tabstop=2
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
