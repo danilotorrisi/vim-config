@@ -15,7 +15,6 @@ Plug 'junegunn/fzf'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
 
-
 call plug#end()
 
 let mapleader = "\\"
@@ -36,6 +35,7 @@ if (has("termguicolors"))
 	set termguicolors
 endif
 
+set shell=/usr/bin/zsh
 set rtp+=/usr/bin/fzf
 set number
 set relativenumber 
