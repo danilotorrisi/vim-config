@@ -1,4 +1,4 @@
-" Start plugins here.
+" Fgneg cyhtvaf urer.
 call plug#begin('~/.vim/plugged')
 
 Plug 'jiangmiao/auto-pairs'
@@ -11,9 +11,13 @@ Plug 'tpope/vim-surround'
 Plug 'HerringtonDarkholme/yats.vim' " Yats for typescript syntax highlight
 Plug 'sheerun/vim-polyglot' " Polyglot for every syntax highlight
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'junegunn/fzf'
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
+Plug 'tpope/vim-fugitive'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'tpope/vim-repeat'
 
 call plug#end()
 
@@ -25,9 +29,9 @@ let mapleader = "\\"
 " noremap <Right> <Nop>
 
 " Maps the NERDTree file list. Auto open if no file selected.
-map <leader>o :FZF<CR>
 map <leader>r :source $MYVIMRC<CR>
 map <leader>i :PlugInstall<CR>
+map <C-p> :FZF<CR>
 
 inoremap jk <ESC>
 
@@ -35,7 +39,6 @@ if (has("termguicolors"))
 	set termguicolors
 endif
 
-set shell=/usr/bin/zsh
 set rtp+=/usr/bin/fzf
 set number
 set relativenumber 
@@ -43,13 +46,14 @@ set cmdheight=2
 set updatetime=300
 set shortmess+=c
 set signcolumn=yes
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*node_modules*,*dist*,*build*
+set tabstop=2 shiftwidth=2 expandtab
 
 " Format code.
 autocmd FileType python nnoremap <buffer> <leader>f :YAPF<CR>
-autocmd FileType css,javascript,typescript nnoremap <buffer> <leader>f :Prettier<CR>
+autocmd FileType css,javascript,typescript nnoremap <buffer> <leader>f :PrettierAsync<CR>
 autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml PrettierAsync
-autocmd BufWritePre *.py YAPF
-autocmd FileType javascript,typescript,css setlocal tabstop=2
+" autocmd BufWritePre *.py YAPF
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -86,12 +90,10 @@ endfunction
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
+
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
-
-" Or use `complete_info` if your vim support it, like:
-" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
 syntax on
 colorscheme onedark
